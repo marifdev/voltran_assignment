@@ -57,15 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
 
-    for (var duration in newDurations) {
-      await Future.delayed(duration);
-      setState(() {
-        tapCount++;
-      });
+    if (newDurations.isNotEmpty) {
+      tapDurations = List.from(newDurations);
+      newDurations.clear();
+      await _onLongPress();
     }
 
     tapDurations = [];
-    newDurations = [];
     lastTapTime = null;
     isIncreasing = false;
   }
