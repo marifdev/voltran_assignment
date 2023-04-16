@@ -25,13 +25,13 @@ class MyHomePageController extends GetxController {
       tapCount++;
     }
 
-    for (var duration in newDurations) {
-      await Future.delayed(duration);
-      tapCount++;
+    if (newDurations.isNotEmpty) {
+      tapDurations = List.from(newDurations);
+      newDurations.clear();
+      await onLongPress();
     }
 
     tapDurations = [];
-    newDurations = [];
     lastTapTime = null;
     isIncreasing.value = false;
   }
