@@ -93,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FloatingActionButton(
           onPressed: _onTap,
           child: const Icon(Icons.add),
+          backgroundColor: isIncreasing ? Colors.green : Colors.blue,
         ),
       ),
     );
