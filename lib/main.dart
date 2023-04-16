@@ -30,19 +30,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Duration> tapDurations = [];
+  List<Duration> newDurations = [];
   int tapCount = 0;
   DateTime? lastTapTime;
+  bool isIncreasing = false;
 
   void _onTap() {
     final currentTime = DateTime.now();
     final duration = lastTapTime != null ? currentTime.difference(lastTapTime!) : Duration.zero;
     lastTapTime = currentTime;
     setState(() {
-      tapDurations.add(duration);
+      if (isIncreasing) {
+        newDurations.add(duration);
+      } else {
+        tapDurations.add(duration);
+      }
     });
   }
 
   Future<void> _onLongPress() async {
+    isIncreasing = true;
     for (var duration in tapDurations) {
       await Future.delayed(duration);
       setState(() {
@@ -50,8 +57,17 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
 
+    for (var duration in newDurations) {
+      await Future.delayed(duration);
+      setState(() {
+        tapCount++;
+      });
+    }
+
     tapDurations = [];
+    newDurations = [];
     lastTapTime = null;
+    isIncreasing = false;
   }
 
   @override
